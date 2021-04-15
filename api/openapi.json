@@ -1,0 +1,155 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Business Service 01",
+    "description" : "Eine kleine Beschreibung zu meinem Service",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/HDI-Deutschland/GHSERVICE/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "tags" : [ {
+    "name" : "MY-TAG",
+    "description" : "Eine kleine Beschreibung zum Tag"
+  } ],
+  "paths" : {
+    "/pets" : {
+      "get" : {
+        "tags" : [ "MY-TAG" ],
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "The number of items to skip before returning the results",
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "The number of items to return",
+          "schema" : {
+            "maximum" : 100,
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 20
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Beschreibung",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InventoryItem"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Invalid request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "MY-TAG" ],
+        "operationId" : "postPets",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/NewItem"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Beschreibung",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InventoryItem"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "InventoryItem" : {
+        "required" : [ "id", "manufacturer", "name", "releaseDate" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Widget Adapter"
+          },
+          "releaseDate" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2016-08-29T09:12:33.001Z"
+          },
+          "manufacturer" : {
+            "$ref" : "#/components/schemas/Manufacturer"
+          }
+        }
+      },
+      "Manufacturer" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_500" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "requestBodies" : {
+      "NewItem" : {
+        "description" : "A JSON object containing item data",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "maximum" : 50,
+              "type" : "integer"
+            },
+            "examples" : {
+              "zero" : {
+                "summary" : "A sample limit value (min)",
+                "value" : 0
+              },
+              "max" : {
+                "summary" : "A sample limit value (max)",
+                "value" : 50
+              }
+            }
+          }
+        },
+        "required" : true
+      }
+    }
+  }
+}
