@@ -1,0 +1,43 @@
+openapi: 3.0.1
+info:
+  title: TEMPLATE
+  description: Eine kleine Bescgreibung
+  contact:
+    name: NAME
+    email: EMAIL@SERVER.DE
+  version: 0.1.0
+  x-api-name: XXX.YYY.ZZZ
+servers:
+- url: https://virtserver.swaggerhub.com/HDI-Deutschland/TEST-001/0.1.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /api/pay:
+    get:
+      tags:
+      - Pay
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Employee'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+          readOnly: true
